@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sample Project — Production Brief</title>
+  <style>
+    :root { --paper:#f3efe6; --ink:#1d231d; --muted:#6b6d61; --line:#d5d0c3; --orange:#e8682e; --olive:#79834a; --cream:#fbf8f1; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:"Segoe UI","Noto Sans KR",Arial,sans-serif; min-width:1200px; }
+    button { font:inherit; color:inherit; }
+    .page { min-height:100vh; padding:26px 44px 38px; }
+    .topbar { height:62px; display:grid; grid-template-columns:320px 1fr auto; align-items:center; border-bottom:1px solid var(--ink); }
+    .brand { display:flex; align-items:center; gap:14px; font-size:16px; font-weight:750; letter-spacing:-.02em; }
+    .mark { width:32px; height:32px; background:var(--ink); color:var(--paper); border-radius:50%; display:grid; place-items:center; font-size:11px; letter-spacing:.08em; }
+    .stream { justify-self:center; font-family:Consolas,monospace; font-size:12px; color:var(--muted); }
+    .top-actions { display:flex; align-items:center; gap:20px; font-size:12px; font-weight:700; }
+    .search { border:0; border-bottom:1px solid var(--muted); background:transparent; padding:8px 24px 8px 0; color:var(--muted); }
+    .avatar { width:32px; height:32px; border:1px solid var(--ink); border-radius:50%; display:grid; place-items:center; }
+    .nav { display:flex; gap:30px; padding:16px 0 20px; font-size:12px; color:var(--muted); }
+    .nav a { cursor:pointer; padding-bottom:6px; }
+    .nav .active { color:var(--ink); border-bottom:2px solid var(--orange); font-weight:750; }
+    .hero { display:grid; grid-template-columns:1.05fr .95fr; border-top:1px solid var(--line); border-bottom:1px solid var(--ink); min-height:330px; }
+    .hero-copy { padding:34px 42px 28px 0; border-right:1px solid var(--line); }
+    .eyebrow { color:var(--orange); font-weight:800; font-size:11px; letter-spacing:.18em; text-transform:uppercase; }
+    h1 { font-family:Georgia,"Times New Roman",serif; font-weight:500; font-size:58px; line-height:.98; letter-spacing:-.045em; margin:18px 0 24px; max-width:650px; }
+    .hero-copy p { max-width:560px; color:var(--muted); line-height:1.75; font-size:14px; }
+    .meta { display:flex; gap:28px; margin-top:28px; font-size:11px; font-family:Consolas,monospace; }
+    .meta span { padding-left:10px; border-left:3px solid var(--olive); }
+    .milestone { position:relative; padding:30px 0 24px 42px; display:flex; flex-direction:column; justify-content:space-between; overflow:hidden; }
+    .milestone:after { content:""; position:absolute; width:260px; height:260px; border:1px solid var(--orange); border-radius:50%; right:-42px; top:-84px; opacity:.55; }
+    .milestone-head { display:flex; justify-content:space-between; align-items:center; font-size:11px; letter-spacing:.12em; font-weight:800; }
+    .live { display:flex; align-items:center; gap:8px; color:var(--olive); }
+    .live:before { content:""; width:8px; height:8px; background:var(--olive); border-radius:50%; box-shadow:0 0 0 5px rgba(121,131,74,.14); }
+    .count { display:flex; align-items:flex-end; gap:18px; }
+    .count strong { font-family:Georgia,serif; font-size:132px; font-weight:400; line-height:.72; letter-spacing:-.07em; }
+    .count div { padding-bottom:5px; }
+    .count b { display:block; font-size:17px; margin-bottom:7px; }
+    .count small { color:var(--muted); }
+    .progress { height:5px; background:#ddd7ca; margin-top:23px; }
+    .progress i { display:block; width:68%; height:100%; background:var(--orange); }
+    .main { display:grid; grid-template-columns:1.3fr .7fr; gap:0; }
+    .timeline { padding:34px 42px 0 0; border-right:1px solid var(--line); }
+    .section-title { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:24px; }
+    .section-title h2 { margin:0; font-family:Georgia,serif; font-size:27px; font-weight:500; }
+    .section-title button { border:0; background:none; font-size:11px; font-weight:750; text-decoration:underline; cursor:pointer; }
+    .event { display:grid; grid-template-columns:86px 20px 1fr auto; gap:14px; min-height:82px; position:relative; }
+    .event:not(:last-child) .rail:after { content:""; position:absolute; top:14px; bottom:-68px; left:5px; width:1px; background:var(--line); }
+    .date { font-family:Consolas,monospace; font-size:11px; color:var(--muted); padding-top:2px; }
+    .rail { position:relative; }
+    .dot { width:11px; height:11px; border:2px solid var(--paper); outline:1px solid var(--ink); border-radius:50%; background:var(--paper); }
+    .event.done .dot { background:var(--olive); outline-color:var(--olive); }
+    .event.now .dot { background:var(--orange); outline-color:var(--orange); }
+    .event h3 { margin:0 0 7px; font-size:14px; }
+    .event p { margin:0; font-size:12px; color:var(--muted); line-height:1.5; }
+    .tag { align-self:start; font-size:10px; padding:5px 8px; border:1px solid var(--line); border-radius:20px; }
+    .side { padding:34px 0 0 40px; }
+    .status-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .card { background:rgba(251,248,241,.72); min-height:112px; padding:17px; border-top:3px solid var(--olive); transition:transform .2s,background .2s; cursor:pointer; }
+    .card:hover { transform:translateY(-3px); background:var(--cream); }
+    .card.warn { border-top-color:var(--orange); }
+    .card label { display:flex; justify-content:space-between; font-size:11px; color:var(--muted); }
+    .card label i { width:7px; height:7px; border-radius:50%; background:var(--olive); }
+    .card.warn label i { background:var(--orange); }
+    .card strong { display:block; font-family:Georgia,serif; font-size:22px; font-weight:500; margin:17px 0 5px; }
+    .card small { font-size:10px; color:var(--muted); }
+    .notice { margin-top:22px; border-top:1px solid var(--ink); padding-top:18px; display:grid; grid-template-columns:55px 1fr; gap:16px; }
+    .notice-date { width:52px; height:52px; border-radius:50%; background:var(--orange); color:white; display:grid; place-content:center; text-align:center; font-size:10px; line-height:1.25; }
+    .notice h3 { margin:1px 0 7px; font-size:14px; }
+    .notice p { color:var(--muted); margin:0; font-size:11px; line-height:1.55; }
+    .footer { display:flex; justify-content:space-between; padding-top:26px; color:var(--muted); font-size:10px; letter-spacing:.08em; }
+    @media(max-width:1300px){ h1{font-size:48px}.count strong{font-size:105px}.page{padding-inline:28px} }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="brand"><div class="mark">SP</div> SAMPLE PROJECT <span style="color:var(--orange)">/</span> PORTAL</div>
+      <div class="stream">STREAM&nbsp; //SampleProject/Main</div>
+      <div class="top-actions"><button class="search">프로젝트 검색&nbsp; ⌕</button><span>도움말</span><div class="avatar">JW</div></div>
+    </header>
+    <nav class="nav"><a class="active">브리프</a><a>빌드</a><a>Perforce</a><a>WorkHub</a><a>릴리스</a><a>팀 캘린더</a></nav>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Production brief · 2026.07.11</div>
+        <h1>알파를 향한<br>오늘의 제작 현황.</h1>
+        <p>Sample Project 팀이 공유하는 데일리 프로덕션 브리프입니다. 현재 빌드, 콘텐츠 잠금, 서비스 상태와 오늘의 결정을 한 화면에서 확인하세요.</p>
+        <div class="meta"><span>UE 5.6.1</span><span>CHANGELIST 184532</span><span>WIN64 DEVELOPMENT</span></div>
+      </div>
+      <div class="milestone">
+        <div class="milestone-head"><span>NEXT MILESTONE</span><span class="live">ON TRACK</span></div>
+        <div class="count"><strong>D-38</strong><div><b>ALPHA</b><small>2026. 08. 18</small></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:10px"><span>전체 진행률</span><b>68%</b></div><div class="progress"><i></i></div></div>
+      </div>
+    </section>
+
+    <main class="main">
+      <section class="timeline">
+        <div class="section-title"><h2>프로덕션 타임라인</h2><button>전체 일정 보기 →</button></div>
+        <div class="event done"><div class="date">07.08 / 완료</div><div class="rail"><div class="dot"></div></div><div><h3>Feature Complete</h3><p>핵심 게임플레이 루프와 월드 스트리밍 기준선 확정</p></div><span class="tag">완료</span></div>
+        <div class="event now"><div class="date">07.11 / 오늘</div><div class="rail"><div class="dot"></div></div><div><h3>Alpha Stabilization — Sprint 12</h3><p>크래시 버그 4건, 프레임 타임 회귀 2건 우선 대응</p></div><span class="tag">진행 중</span></div>
+        <div class="event"><div class="date">07.22 / 예정</div><div class="rail"><div class="dot"></div></div><div><h3>Content Lock 01</h3><p>챕터 1–3 아트 에셋 제출 및 현지화 문자열 동결</p></div><span class="tag">D-11</span></div>
+        <div class="event"><div class="date">08.04 / 예정</div><div class="rail"><div class="dot"></div></div><div><h3>Alpha Candidate 01</h3><p>QA 전수 패스가 가능한 첫 번째 후보 빌드 생성</p></div><span class="tag">D-24</span></div>
+      </section>
+
+      <aside class="side">
+        <div class="section-title"><h2>서비스 상태</h2><button>상세 보기</button></div>
+        <div class="status-grid">
+          <div class="card"><label>BUILD <i></i></label><strong>성공</strong><small>CL 184532 · 14:32 KST</small></div>
+          <div class="card warn"><label>PERFORCE <i></i></label><strong>부하 있음</strong><small>대기 12 · 평균 2.4초</small></div>
+          <div class="card"><label>WORKHUB <i></i></label><strong>정상</strong><small>활성 이슈 128 · 동기화됨</small></div>
+          <div class="card"><label>SERVICES <i></i></label><strong>6 / 6</strong><small>Backend · DDC · Horde 정상</small></div>
+        </div>
+        <div class="notice"><div class="notice-date">TODAY<br><b>16:00</b></div><div><h3>오늘의 빌드 승인 회의</h3><p>Alpha Stabilization 후보 빌드의 QA 진입 여부를 결정합니다. 참석: Production, QA, Tech.</p></div></div>
+      </aside>
+    </main>
+    <footer class="footer"><span>SAMPLE PROJECT · INTERNAL</span><span>LAST SYNC 15:06 KST&nbsp;&nbsp; / &nbsp;&nbsp;DATA REFRESH 60 SEC</span></footer>
+  </div>
+</body>
+</html>
