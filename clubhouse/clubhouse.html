@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FC 마포 유나이티드 — 클럽하우스</title>
+  <style>
+    :root {
+      --navy: #0b2138;
+      --navy-2: #163652;
+      --green: #2f8f58;
+      --green-dark: #17633b;
+      --lime: #d9ef70;
+      --paper: #f7f7f1;
+      --white: #ffffff;
+      --ink: #10243a;
+      --muted: #657483;
+      --line: #dce2dc;
+      --shadow: 0 18px 45px rgba(11, 33, 56, .10);
+      --radius: 26px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Arial Narrow", "Pretendard", "Noto Sans KR", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, a { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible, button:focus-visible { outline: 3px solid #ecb932; outline-offset: 3px; }
+    .topline { height: 8px; background: linear-gradient(90deg, var(--green) 0 42%, var(--lime) 42% 58%, var(--navy) 58%); }
+    header {
+      height: 102px;
+      padding: 0 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,.93);
+      border-bottom: 1px solid var(--line);
+    }
+    .brand { display: flex; align-items: center; gap: 15px; }
+    .crest {
+      width: 56px; height: 64px; border-radius: 18px 18px 24px 24px;
+      display: grid; place-items: center; color: white; background: var(--navy);
+      box-shadow: inset 0 -7px 0 var(--green); font-weight: 900; letter-spacing: -2px;
+    }
+    .brand-copy b { display: block; font-size: 18px; font-weight: 900; letter-spacing: -.7px; }
+    .brand-copy span { display: block; margin-top: 4px; color: var(--green-dark); font-size: 11px; font-weight: 800; letter-spacing: 1.9px; }
+    nav { display: flex; gap: 34px; align-items: center; font-weight: 750; font-size: 14px; }
+    nav a:first-child { color: var(--green-dark); }
+    .login { padding: 13px 20px; border: 1px solid var(--navy); border-radius: 999px; }
+    main { padding: 30px 58px 46px; max-width: 1600px; margin: 0 auto; }
+    .hero { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(410px, .65fr); gap: 24px; }
+    .intro {
+      min-height: 438px; border-radius: 36px; padding: 55px 58px;
+      color: white; background: var(--navy); position: relative; overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .intro:before {
+      content: ""; position: absolute; width: 360px; height: 360px; right: -100px; top: -145px;
+      border: 80px solid rgba(217,239,112,.17); border-radius: 50%;
+    }
+    .intro:after {
+      content: ""; position: absolute; width: 310px; height: 78px; right: 30px; bottom: 36px;
+      border-radius: 50%; border: 2px solid rgba(255,255,255,.18); transform: rotate(-10deg);
+    }
+    .eyebrow { display: flex; align-items: center; gap: 10px; color: var(--lime); font-size: 12px; font-weight: 900; letter-spacing: 2.2px; }
+    .eyebrow:before { content: ""; width: 29px; height: 4px; border-radius: 10px; background: var(--lime); }
+    h1 { position: relative; z-index: 1; max-width: 650px; margin: 27px 0 22px; font-size: 67px; line-height: .99; letter-spacing: -4px; font-weight: 950; }
+    .lead { position: relative; z-index: 1; max-width: 520px; color: #d9e2e8; font-size: 16px; line-height: 1.75; }
+    .actions { position: relative; z-index: 2; display: flex; gap: 11px; margin-top: 35px; }
+    .btn { border-radius: 15px; padding: 15px 22px; font-size: 14px; font-weight: 850; display: inline-flex; align-items: center; gap: 12px; }
+    .btn-primary { background: var(--lime); color: var(--navy); }
+    .btn-ghost { background: rgba(255,255,255,.1); color: white; border: 1px solid rgba(255,255,255,.25); }
+    .arrow { font-size: 19px; line-height: 0; }
+    .match {
+      min-height: 438px; background: var(--white); border: 1px solid var(--line); border-radius: 36px;
+      padding: 32px 36px 31px; box-shadow: var(--shadow); display: flex; flex-direction: column;
+    }
+    .card-label { display: flex; align-items: center; justify-content: space-between; color: var(--green-dark); font-size: 12px; font-weight: 900; letter-spacing: 1.5px; }
+    .live-dot { width: 9px; height: 9px; background: var(--green); border-radius: 50%; box-shadow: 0 0 0 5px #e4f2e9; }
+    .date { margin-top: 31px; display: flex; align-items: baseline; gap: 12px; }
+    .date strong { font-size: 48px; line-height: 1; letter-spacing: -3px; }
+    .date span { font-size: 14px; color: var(--muted); font-weight: 700; }
+    .venue { margin: 13px 0 28px; color: var(--muted); font-size: 14px; }
+    .versus { display: grid; grid-template-columns: 1fr 52px 1fr; align-items: center; text-align: center; gap: 8px; }
+    .mini-crest { width: 66px; height: 66px; margin: auto; border-radius: 22px 22px 27px 27px; display: grid; place-items: center; font-size: 16px; font-weight: 950; }
+    .our { color: white; background: var(--navy); box-shadow: inset 0 -7px var(--green); }
+    .their { color: var(--navy); background: #eef0eb; border: 2px solid #ccd4cd; }
+    .team-name { display: block; margin-top: 12px; font-size: 13px; font-weight: 850; line-height: 1.25; }
+    .vs { color: #9aa5ad; font-size: 11px; font-weight: 900; letter-spacing: 1px; }
+    .match-foot { margin-top: auto; padding-top: 24px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--muted); }
+    .match-foot b { color: var(--navy); font-size: 13px; }
+    .section-head { margin: 31px 2px 17px; display: flex; align-items: end; justify-content: space-between; }
+    .section-head h2 { margin: 0; font-size: 24px; letter-spacing: -1.2px; }
+    .section-head p { margin: 6px 0 0; color: var(--muted); font-size: 13px; }
+    .member-link { color: var(--green-dark); font-size: 13px; font-weight: 850; }
+    .grid { display: grid; grid-template-columns: .88fr 1.2fr .92fr; gap: 20px; }
+    .card { min-height: 220px; border-radius: var(--radius); background: white; border: 1px solid var(--line); padding: 25px 27px; }
+    .result { color: white; background: var(--green-dark); border-color: transparent; position: relative; overflow: hidden; }
+    .result:after { content: ""; position: absolute; width: 120px; height: 120px; border: 28px solid rgba(255,255,255,.1); border-radius: 50%; right: -43px; bottom: -52px; }
+    .subtle { color: rgba(255,255,255,.72); font-size: 11px; font-weight: 800; letter-spacing: 1.3px; }
+    .score-row { margin: 28px 0 22px; display: flex; align-items: center; justify-content: space-between; }
+    .score-row span { font-size: 13px; font-weight: 800; }
+    .score { padding: 8px 14px; border-radius: 13px; background: var(--lime); color: var(--navy); font-size: 27px !important; font-weight: 950 !important; letter-spacing: 1px; }
+    .scorers { font-size: 12px; color: rgba(255,255,255,.76); }
+    .scorers b { color: white; }
+    .dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .dash-title { font-weight: 900; font-size: 15px; }
+    .dash-title span { display: block; color: var(--muted); margin-top: 6px; font-size: 11px; font-weight: 650; }
+    .rsvp { margin-top: 25px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+    .rsvp button { border: 1px solid var(--line); background: #f7f8f5; border-radius: 12px; padding: 10px 4px; color: var(--muted); font-size: 11px; font-weight: 800; }
+    .rsvp button:first-child { color: white; background: var(--green); border-color: var(--green); }
+    .attendance { margin-top: 20px; display: flex; align-items: center; justify-content: space-between; }
+    .faces { display: flex; }
+    .face { width: 28px; height: 28px; margin-left: -6px; display: grid; place-items: center; border-radius: 50%; color: white; background: var(--navy-2); border: 2px solid white; font-size: 9px; font-weight: 900; }
+    .face:first-child { margin-left: 0; background: var(--green); }
+    .count { color: var(--muted); font-size: 11px; }
+    .count b { color: var(--navy); }
+    .players { position: relative; overflow: hidden; }
+    .positions { display: flex; gap: 6px; margin-top: 19px; }
+    .pill { padding: 7px 10px; border-radius: 999px; color: var(--muted); background: #f0f2ed; font-size: 10px; font-weight: 800; }
+    .pill.active { background: var(--navy); color: white; }
+    .player-row { display: flex; gap: 13px; margin-top: 20px; }
+    .player { flex: 1; min-width: 0; }
+    .portrait { height: 61px; border-radius: 17px; background: linear-gradient(150deg, #e7eee8, #c5d9c9); position: relative; overflow: hidden; }
+    .portrait:before { content: ""; position: absolute; width: 25px; height: 25px; border-radius: 50%; background: #c28d6b; left: calc(50% - 12px); top: 10px; }
+    .portrait:after { content: ""; position: absolute; width: 50px; height: 34px; border-radius: 50% 50% 8px 8px; background: var(--navy); left: calc(50% - 25px); bottom: -12px; }
+    .player b { display: block; margin-top: 8px; font-size: 10px; white-space: nowrap; }
+    .player span { color: var(--green-dark); font-size: 9px; font-weight: 800; }
+    @media (max-width: 900px) {
+      header { padding: 0 22px; } nav a:not(.login) { display: none; }
+      main { padding: 22px; } .hero, .grid { grid-template-columns: 1fr; }
+      .intro { min-height: 390px; padding: 42px 30px; } h1 { font-size: 48px; }
+      .match { min-height: 410px; } .grid { padding-bottom: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topline"></div>
+  <header>
+    <a class="brand" href="#" aria-label="FC 마포 유나이티드 홈">
+      <span class="crest" aria-hidden="true">MU</span>
+      <span class="brand-copy"><b>FC 마포 유나이티드</b><span>MAPO · SINCE 2018</span></span>
+    </a>
+    <nav aria-label="주요 메뉴">
+      <a href="#">홈</a><a href="#">팀 소개</a><a href="#">경기 일정</a><a href="#">선수단</a><a href="#">입단 신청</a>
+      <a class="login" href="#">회원 로그인</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="intro">
+        <div class="eyebrow">WE PLAY TOGETHER</div>
+        <h1 id="hero-title">축구로 만나,<br />팀으로 남다</h1>
+        <p class="lead">매주 일요일 아침, 마포의 잔디 위에서 함께 뜁니다. 실력보다 약속을, 승리만큼 팀워크를 소중히 여기는 우리 동네 축구팀입니다.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#">입단 신청 <span class="arrow">→</span></a>
+          <a class="btn btn-ghost" href="#">경기 일정 보기</a>
+        </div>
+      </div>
+      <aside class="match" aria-labelledby="next-match">
+        <div class="card-label"><span id="next-match">NEXT MATCH</span><span class="live-dot" aria-hidden="true"></span></div>
+        <div class="date"><strong>07.19</strong><span>일요일 · 09:00</span></div>
+        <p class="venue">서울 월드컵공원 축구장</p>
+        <div class="versus">
+          <div><div class="mini-crest our">MU</div><span class="team-name">마포 유나이티드</span></div>
+          <div class="vs">VS</div>
+          <div><div class="mini-crest their">SR</div><span class="team-name">서울 레인저스</span></div>
+        </div>
+        <div class="match-foot"><span>친선 경기 · 홈</span><b>상세 보기 →</b></div>
+      </aside>
+    </section>
+    <div class="section-head">
+      <div><h2>이번 주 클럽하우스</h2><p>경기 소식부터 회원 참석 현황까지 한눈에 확인하세요.</p></div>
+      <a class="member-link" href="#">회원 대시보드 열기 →</a>
+    </div>
+    <section class="grid" aria-label="클럽 소식과 회원 기능 미리보기">
+      <article class="card result">
+        <div class="subtle">RECENT RESULT · 07.12</div>
+        <div class="score-row"><span>마포 유나이티드</span><span class="score">3 : 1</span><span>서대문 FC</span></div>
+        <p class="scorers"><b>득점</b>&nbsp; 김도윤 2 · 박준호 1</p>
+      </article>
+      <article class="card">
+        <div class="dashboard">
+          <div>
+            <div class="dash-title">다음 경기 참석 여부<span>7월 19일 · 서울 레인저스전</span></div>
+            <div class="rsvp"><button type="button">참석</button><button type="button">미정</button><button type="button">불참</button></div>
+            <div class="attendance"><div class="faces" aria-label="참석 예정 회원"><span class="face">민</span><span class="face">준</span><span class="face">현</span><span class="face">+9</span></div><span class="count"><b>12명</b> 참석 예정</span></div>
+          </div>
+          <div>
+            <div class="dash-title">포지션 현황<span>균형 잡힌 라인업을 준비 중이에요</span></div>
+            <div style="margin-top:22px; display:grid; gap:10px; font-size:11px; font-weight:800;">
+              <div style="display:flex;justify-content:space-between"><span>공격수</span><span>3 / 4</span></div>
+              <div style="height:7px;background:#edf0eb;border-radius:9px"><div style="width:75%;height:100%;background:#2f8f58;border-radius:9px"></div></div>
+              <div style="display:flex;justify-content:space-between"><span>미드필더</span><span>4 / 4</span></div>
+              <div style="height:7px;background:#edf0eb;border-radius:9px"><div style="width:100%;height:100%;background:#0b2138;border-radius:9px"></div></div>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="card players">
+        <div class="dash-title">우리 선수단<span>포지션을 넘어 한 팀으로</span></div>
+        <div class="positions"><span class="pill active">전체</span><span class="pill">GK</span><span class="pill">DF</span><span class="pill">MF</span><span class="pill">FW</span></div>
+        <div class="player-row">
+          <div class="player"><div class="portrait"></div><b>김도윤 · 9</b><span>FW · 8골</span></div>
+          <div class="player"><div class="portrait"></div><b>이민재 · 6</b><span>MF · 6도움</span></div>
+          <div class="player"><div class="portrait"></div><b>최현우 · 4</b><span>DF · 출석 92%</span></div>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
