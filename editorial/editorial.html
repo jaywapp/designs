@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FC 마포 유나이티드 — 에디토리얼 스포츠</title>
+  <style>
+    :root {
+      --navy: #071a2d;
+      --navy-soft: #102943;
+      --green: #35a853;
+      --green-bright: #a9ee79;
+      --paper: #f3f1e9;
+      --white: #ffffff;
+      --ink: #091727;
+      --muted: #647080;
+      --line: rgba(7, 26, 45, .15);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100%;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Arial Narrow", "Pretendard", "Noto Sans KR", Arial, sans-serif;
+    }
+
+    body { min-height: 100vh; }
+
+    button, a { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible, button:focus-visible { outline: 3px solid #f6d64a; outline-offset: 4px; }
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, transparent 0 6.5%, rgba(7,26,45,.055) 6.5% calc(6.5% + 1px), transparent calc(6.5% + 1px)),
+        var(--paper);
+    }
+
+    .topbar {
+      height: 100px;
+      padding: 0 6.5%;
+      display: grid;
+      grid-template-columns: 360px 1fr auto;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand { display: flex; align-items: center; gap: 17px; }
+    .crest {
+      width: 54px;
+      height: 62px;
+      border: 3px solid var(--navy);
+      border-radius: 6px 6px 22px 22px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      color: var(--navy);
+      font: 900 17px/1 Arial, sans-serif;
+      letter-spacing: -1px;
+      background: var(--green-bright);
+      box-shadow: 5px 5px 0 var(--navy);
+    }
+    .crest::after {
+      content: "2018";
+      position: absolute;
+      bottom: 7px;
+      font: 700 8px/1 Arial, sans-serif;
+      letter-spacing: 1px;
+    }
+    .brand-copy strong { display: block; font-size: 18px; letter-spacing: -.5px; }
+    .brand-copy span { display: block; margin-top: 5px; color: var(--muted); font: 700 10px/1 Arial, sans-serif; letter-spacing: 2.1px; }
+
+    nav { display: flex; justify-content: center; gap: 38px; }
+    nav a { font-size: 14px; font-weight: 800; color: #304052; }
+    nav a:first-child { color: var(--navy); position: relative; }
+    nav a:first-child::after { content: ""; position: absolute; left: 0; right: 0; bottom: -14px; height: 3px; background: var(--green); }
+
+    .member-btn {
+      border: 1px solid var(--navy);
+      background: transparent;
+      color: var(--navy);
+      padding: 12px 18px;
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 600px;
+      display: grid;
+      grid-template-columns: 57% 43%;
+    }
+
+    .hero-copy {
+      padding: 72px 4% 50px 6.5%;
+      position: relative;
+      z-index: 2;
+    }
+    .issue {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin-bottom: 34px;
+      color: var(--green);
+      font: 900 12px/1 Arial, sans-serif;
+      letter-spacing: 2.7px;
+      text-transform: uppercase;
+    }
+    .issue::before { content: ""; width: 42px; height: 4px; background: currentColor; }
+    h1 {
+      margin: 0;
+      max-width: 840px;
+      color: var(--navy);
+      font-size: clamp(76px, 7.1vw, 116px);
+      font-weight: 950;
+      line-height: .9;
+      letter-spacing: -7px;
+      word-break: keep-all;
+    }
+    h1 .green { color: var(--green); }
+    .lead-row { margin-top: 42px; display: grid; grid-template-columns: 170px 1fr; gap: 32px; align-items: start; }
+    .season { padding-top: 3px; color: var(--navy); font: 900 13px/1.5 Arial, sans-serif; letter-spacing: 1.7px; }
+    .lead { margin: 0; max-width: 450px; color: #425061; font-size: 17px; line-height: 1.75; word-break: keep-all; }
+    .actions { margin-top: 32px; display: flex; gap: 12px; }
+    .cta { border: 0; padding: 15px 22px; font-size: 14px; font-weight: 900; cursor: pointer; }
+    .cta.primary { background: var(--navy); color: var(--white); box-shadow: 5px 5px 0 var(--green); }
+    .cta.secondary { background: transparent; color: var(--navy); border-bottom: 2px solid var(--navy); }
+
+    .match-side {
+      background: var(--navy);
+      color: var(--white);
+      padding: 70px 6.5% 58px 7%;
+      position: relative;
+      overflow: hidden;
+    }
+    .match-side::before {
+      content: "07";
+      position: absolute;
+      right: -25px;
+      top: -46px;
+      color: rgba(255,255,255,.035);
+      font: 950 340px/.9 Arial, sans-serif;
+      letter-spacing: -30px;
+    }
+    .side-label { position: relative; font: 900 11px/1 Arial, sans-serif; letter-spacing: 2.6px; color: var(--green-bright); }
+    .side-title { position: relative; margin: 22px 0 34px; max-width: 380px; font-size: 42px; line-height: 1.12; letter-spacing: -2px; }
+
+    .ticket {
+      position: relative;
+      background: var(--white);
+      color: var(--ink);
+      padding: 27px 27px 24px;
+      min-height: 290px;
+      box-shadow: 14px 14px 0 rgba(53,168,83,.85);
+    }
+    .ticket::before, .ticket::after {
+      content: "";
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--navy);
+      top: 173px;
+    }
+    .ticket::before { left: -12px; }
+    .ticket::after { right: -12px; }
+    .ticket-head { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 22px; border-bottom: 1px dashed #aab1b8; }
+    .match-no { font: 900 10px/1 Arial, sans-serif; letter-spacing: 2px; color: var(--green); }
+    .date { text-align: right; }
+    .date strong { display: block; font: 950 34px/.9 Arial, sans-serif; letter-spacing: -2px; }
+    .date span { display: block; margin-top: 6px; color: var(--muted); font-size: 12px; font-weight: 800; }
+    .versus { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; padding: 24px 0 20px; }
+    .team { font-size: 17px; font-weight: 950; line-height: 1.25; }
+    .team.away { text-align: right; }
+    .vs { color: var(--green); font: 950 italic 14px/1 Arial, sans-serif; }
+    .venue { padding-top: 18px; border-top: 1px dashed #aab1b8; display: flex; justify-content: space-between; color: #4a5866; font-size: 12px; font-weight: 800; }
+
+    .recent { margin-top: 36px; display: flex; align-items: center; justify-content: space-between; position: relative; }
+    .recent small { display: block; color: #93a3b5; font-size: 10px; font-weight: 900; letter-spacing: 2px; }
+    .recent strong { display: block; margin-top: 7px; font-size: 15px; }
+    .score { display: flex; align-items: baseline; gap: 9px; }
+    .score b { font: 950 44px/1 Arial, sans-serif; }
+    .score span { color: var(--green-bright); font-size: 12px; font-weight: 900; }
+
+    .dashboard-strip {
+      min-height: 300px;
+      padding: 42px 6.5% 48px;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr .75fr;
+      gap: 22px;
+      border-top: 1px solid var(--line);
+      background: #faf9f5;
+    }
+    .strip-head { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: end; margin-bottom: 2px; }
+    .strip-head h2 { margin: 0; font-size: 24px; letter-spacing: -1px; }
+    .strip-head p { margin: 0; color: var(--muted); font-size: 12px; }
+    .panel { border-top: 4px solid var(--navy); background: var(--white); padding: 20px 22px; box-shadow: 0 10px 30px rgba(7,26,45,.06); }
+    .panel.green-top { border-color: var(--green); }
+    .panel-label { color: var(--muted); font: 900 10px/1 Arial, sans-serif; letter-spacing: 1.7px; }
+    .panel h3 { margin: 13px 0 8px; font-size: 19px; }
+    .panel p { margin: 0; color: #5b6876; font-size: 13px; line-height: 1.55; }
+    .attendance { margin-top: 15px; display: flex; gap: 7px; }
+    .attendance button { border: 1px solid #cad0d5; background: var(--white); padding: 8px 12px; font-size: 11px; font-weight: 900; cursor: pointer; }
+    .attendance button:first-child { border-color: var(--green); background: #e7f6e9; color: #17642a; }
+    .amount { margin-top: 13px; font: 950 28px/1 Arial, sans-serif; }
+    .paid { display: inline-block; margin-top: 11px; padding: 5px 8px; color: #17642a; background: #e7f6e9; font-size: 10px; font-weight: 900; }
+
+    @media (max-width: 900px) {
+      .topbar { grid-template-columns: 1fr auto; padding: 0 24px; }
+      nav { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-copy { padding: 54px 24px; }
+      h1 { font-size: 68px; letter-spacing: -4px; }
+      .lead-row { grid-template-columns: 1fr; gap: 12px; }
+      .match-side { padding: 50px 24px 58px; }
+      .dashboard-strip { padding: 38px 24px; grid-template-columns: 1fr; }
+      .strip-head { grid-column: auto; align-items: start; flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="FC 마포 유나이티드 홈">
+        <span class="crest" aria-hidden="true">MU</span>
+        <span class="brand-copy"><strong>FC 마포 유나이티드</strong><span>MAPO · SEOUL</span></span>
+      </a>
+      <nav aria-label="주요 메뉴">
+        <a href="#">홈</a><a href="#">팀 소개</a><a href="#">경기 일정</a><a href="#">선수단</a><a href="#">입단 신청</a>
+      </nav>
+      <button class="member-btn" type="button">회원 로그인</button>
+    </header>
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div class="issue">Season 2026 · No. 08</div>
+        <h1 id="hero-title">축구로 만나,<br><span class="green">팀으로</span> 남다</h1>
+        <div class="lead-row">
+          <div class="season">SUNDAY<br>FOOTBALL CLUB<br>EST. 2018</div>
+          <p class="lead">서울 마포에서 매주 일요일 아침, 승부보다 오래 남는 팀워크를 만듭니다. 진지하게 뛰고, 다정하게 함께하는 우리의 시즌에 합류하세요.</p>
+        </div>
+        <div class="actions">
+          <button class="cta primary" type="button">입단 신청하기 →</button>
+          <button class="cta secondary" type="button">전체 경기 일정</button>
+        </div>
+      </div>
+
+      <aside class="match-side" aria-label="다음 경기와 최근 결과">
+        <div class="side-label">NEXT FIXTURE</div>
+        <h2 class="side-title">일요일 아침을 깨우는<br>우리의 다음 90분</h2>
+        <article class="ticket" aria-label="7월 19일 서울 레인저스전 경기 정보">
+          <div class="ticket-head">
+            <span class="match-no">LEAGUE · MATCH 12</span>
+            <div class="date"><strong>07.19</strong><span>일요일 · 09:00</span></div>
+          </div>
+          <div class="versus">
+            <div class="team">FC 마포<br>유나이티드</div>
+            <div class="vs">VS</div>
+            <div class="team away">서울<br>레인저스</div>
+          </div>
+          <div class="venue"><span>월드컵공원 축구장</span><span>서울 마포구</span></div>
+        </article>
+        <div class="recent">
+          <div><small>RECENT RESULT</small><strong>vs 성산 FC · 친선 경기</strong></div>
+          <div class="score"><b>3–1</b><span>WIN</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="dashboard-strip" aria-labelledby="dashboard-title">
+      <div class="strip-head"><h2 id="dashboard-title">멤버 라커룸 미리보기</h2><p>일정, 참석, 공지와 회비를 한곳에서 관리합니다.</p></div>
+      <article class="panel green-top">
+        <div class="panel-label">UPCOMING · RSVP</div>
+        <h3>7월 19일 리그전 참석 여부</h3>
+        <p>현재 18명 참석 · 골키퍼 1 / 수비 6 / 미드필더 7 / 공격 4</p>
+        <div class="attendance" aria-label="참석 여부 선택"><button type="button">참석</button><button type="button">미정</button><button type="button">불참</button></div>
+      </article>
+      <article class="panel">
+        <div class="panel-label">LATEST NOTICE</div>
+        <h3>여름 시즌 유니폼 배부 안내</h3>
+        <p>이번 주 경기 30분 전 운영 테이블에서 새 원정 유니폼을 배부합니다.</p>
+      </article>
+      <article class="panel">
+        <div class="panel-label">MEMBERSHIP FEE · JUL</div>
+        <h3>7월 회비</h3>
+        <div class="amount">₩30,000</div>
+        <span class="paid">납부 완료</span>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

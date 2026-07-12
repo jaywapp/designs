@@ -14,11 +14,24 @@ UI 디자인 시안 모음. 각 디자인은 **샘플 HTML + `design.md` 스펙 
 
 각 폴더의 `design.md`에 컬러 토큰, 타이포그래피, 레이아웃, 컴포넌트, 반응형, 재현 체크리스트가 정리되어 있습니다.
 
+## FC 마포 유나이티드 — 축구 클럽 랜딩
+
+동호회 축구팀(FC 마포 유나이티드) 랜딩 페이지를 세 가지 컨셉으로 시각화한 시안입니다.
+
+| 디자인 | 컨셉 | 테마 | 미리보기 |
+|--------|------|------|----------|
+| [editorial](./editorial/) | Editorial Sports — 스포츠 매거진 | 라이트 페이퍼 / Arial Narrow 초대형 헤드라인 | ![](./editorial/editorial.png) |
+| [clubhouse](./clubhouse/) | Clubhouse — 친근한 클럽하우스 | 라이트 / 라운드 카드 · 라임 포인트 | ![](./clubhouse/clubhouse.png) |
+| [performance](./performance/) | Performance Hub — 데이터 대시보드 | 다크 / 발광 라임 · 전술 보드 | ![](./performance/performance.png) |
+
 ## 폴더 구조
 
 ```
 designs/
-├── mission-control/    # 샘플 HTML + design.md + PNG
+├── mission-control/    # Sample Project — 샘플 HTML + design.md + PNG
 ├── production-brief/
-└── build-console/
+├── build-console/
+├── editorial/          # FC 마포 유나이티드
+├── clubhouse/
+└── performance/
 ```
