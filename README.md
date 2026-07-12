@@ -2,6 +2,10 @@
 
 UI 디자인 시안 모음. 각 디자인은 **샘플 HTML + `design.md` 스펙 + PNG 미리보기** 한 세트로 자족적으로 구성됩니다.
 
+**모든 샘플을 한 페이지에서 검색/탐색: [GitHub Pages 인덱스](https://jaywapp.github.io/designs/)**
+
+이 인덱스는 `main`에 push될 때마다 [`scripts/generate_index.py`](./scripts/generate_index.py)가 폴더를 스캔해 자동으로 다시 생성됩니다. `*.html` 샘플이 들어있는 폴더를 새로 추가하기만 하면 별도 수정 없이 다음 배포에 반영됩니다(제목/설명은 `design.md`의 첫 heading과 그 아래 문단에서 추출, 없으면 폴더명 사용).
+
 ## Sample Project — UE5 개발 관제 대시보드
 
 동일한 콘텐츠(빌드 파이프라인 · 체인지리스트 · 서비스 상태)를 세 가지 컨셉으로 시각화한 시안입니다.
