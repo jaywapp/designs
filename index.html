@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>designs — 샘플 모음</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f7f7f8;
+    --card-bg: #ffffff;
+    --text: #1a1a1e;
+    --muted: #6b6b76;
+    --border: #e4e4e8;
+    --accent: #4f46e5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #101014;
+      --card-bg: #1a1a20;
+      --text: #f0f0f2;
+      --muted: #9a9aa4;
+      --border: #2c2c34;
+      --accent: #8b7ff0;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Pretendard, Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  header {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 24px 16px;
+  }
+  h1 { margin: 0 0 8px; font-size: 28px; }
+  .sub { color: var(--muted); margin: 0 0 24px; }
+  #search {
+    width: 100%;
+    max-width: 420px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text);
+    font-size: 15px;
+  }
+  #search:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  main { max-width: 1100px; margin: 0 auto; padding: 8px 24px 64px; }
+  #count { color: var(--muted); font-size: 13px; margin: 0 0 16px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--card-bg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+  .thumb {
+    width: 100%;
+    aspect-ratio: 16/10;
+    object-fit: cover;
+    background: var(--border);
+    display: block;
+  }
+  .thumb.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .body { padding: 14px 16px 16px; }
+  .title { font-weight: 600; font-size: 16px; margin: 0 0 6px; }
+  .desc {
+    color: var(--muted);
+    font-size: 13px;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .slug { color: var(--muted); font-size: 11px; margin-top: 8px; font-family: monospace; }
+  #empty { display: none; color: var(--muted); padding: 32px 0; text-align: center; }
+  footer { max-width: 1100px; margin: 0 auto; padding: 0 24px 48px; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>designs</h1>
+  <p class="sub">UI 디자인 시안 모음 — 6개 샘플. 폴더를 추가하면 다음 배포 때 자동으로 반영됩니다.</p>
+  <input id="search" type="search" placeholder="제목, 설명, 폴더명으로 검색…" autocomplete="off">
+</header>
+<main>
+  <p id="count"></p>
+  <div class="grid" id="grid"></div>
+  <p id="empty">일치하는 샘플이 없습니다.</p>
+</main>
+<footer>자동 생성됨 · scripts/generate_index.py</footer>
+<script>
+  const SAMPLES = [{"slug": "build-console", "title": "Build Console", "description": "UE5 개발 관제 대시보드. 터미널/CI 콘솔 미학의 다크 테마 단일 화면 레이아웃.", "html": "option-c.html", "thumbnail": "option-c.png", "hasSpec": true}, {"slug": "clubhouse", "title": "Clubhouse", "description": "FC 마포 유나이티드 축구 클럽 랜딩. 친근한 클럽하우스 미학의 라운드 카드 레이아웃.", "html": "clubhouse.html", "thumbnail": "clubhouse.png", "hasSpec": true}, {"slug": "editorial", "title": "Editorial Sports", "description": "FC 마포 유나이티드 축구 클럽 랜딩. 에디토리얼 스포츠 매거진 미학의 라이트 페이퍼 테마.", "html": "editorial.html", "thumbnail": "editorial.png", "hasSpec": true}, {"slug": "mission-control", "title": "Mission Control", "description": "UE5 개발 관제 대시보드. 우주 관제소(mission control) 미학의 다크 틸 테마.", "html": "option-a.html", "thumbnail": "option-a.png", "hasSpec": true}, {"slug": "performance", "title": "Performance Hub", "description": "FC 마포 유나이티드 축구 클럽 랜딩. 다크 테크 퍼포먼스 허브 미학의 데이터 대시보드.", "html": "performance.html", "thumbnail": "performance.png", "hasSpec": true}, {"slug": "production-brief", "title": "Production Brief", "description": "UE5 개발 현황 포털. 에디토리얼(잡지) 브리프 미학의 라이트 페이퍼 테마.", "html": "option-b.html", "thumbnail": "option-b.png", "hasSpec": true}];
+
+  const grid = document.getElementById('grid');
+  const countEl = document.getElementById('count');
+  const emptyEl = document.getElementById('empty');
+  const search = document.getElementById('search');
+
+  function card(s) {
+    const a = document.createElement('a');
+    a.className = 'card';
+    a.href = s.slug + '/' + s.html;
+
+    if (s.thumbnail) {
+      const img = document.createElement('img');
+      img.className = 'thumb';
+      img.loading = 'lazy';
+      img.src = s.slug + '/' + s.thumbnail;
+      img.alt = s.title;
+      a.appendChild(img);
+    } else {
+      const ph = document.createElement('div');
+      ph.className = 'thumb placeholder';
+      ph.textContent = '미리보기 없음';
+      a.appendChild(ph);
+    }
+
+    const body = document.createElement('div');
+    body.className = 'body';
+    const title = document.createElement('p');
+    title.className = 'title';
+    title.textContent = s.title;
+    body.appendChild(title);
+    if (s.description) {
+      const desc = document.createElement('p');
+      desc.className = 'desc';
+      desc.textContent = s.description;
+      body.appendChild(desc);
+    }
+    const slug = document.createElement('p');
+    slug.className = 'slug';
+    slug.textContent = s.slug + '/';
+    body.appendChild(slug);
+    a.appendChild(body);
+    return a;
+  }
+
+  function render(list) {
+    grid.innerHTML = '';
+    list.forEach(s => grid.appendChild(card(s)));
+    countEl.textContent = list.length + '개 표시 중 (전체 ' + SAMPLES.length + '개)';
+    emptyEl.style.display = list.length ? 'none' : 'block';
+  }
+
+  search.addEventListener('input', () => {
+    const q = search.value.trim().toLowerCase();
+    if (!q) { render(SAMPLES); return; }
+    render(SAMPLES.filter(s =>
+      s.title.toLowerCase().includes(q) ||
+      s.description.toLowerCase().includes(q) ||
+      s.slug.toLowerCase().includes(q)
+    ));
+  });
+
+  render(SAMPLES);
+</script>
+</body>
+</html>

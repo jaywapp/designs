@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sample Project — Build Console</title>
+  <style>
+    :root{--bg:#0d0f0e;--panel:#141714;--panel2:#191c18;--line:#30352e;--text:#e8ece4;--muted:#858d80;--lime:#b9ff38;--amber:#ffbd3e;--red:#ff625d;--cyan:#63d7db}
+    *{box-sizing:border-box} html,body{margin:0;width:100%;height:100%;background:var(--bg);color:var(--text);font-family:"Cascadia Mono","SFMono-Regular",Consolas,"Malgun Gothic",monospace} body{min-width:1180px;overflow:hidden}
+    button{font:inherit} .app{height:100vh;display:grid;grid-template-columns:76px 1fr;grid-template-rows:64px 1fr}
+    .rail{grid-row:1/3;background:#090b0a;border-right:1px solid var(--line);display:flex;flex-direction:column;align-items:center;padding:18px 0;gap:13px}.mark{width:38px;height:38px;border:1px solid var(--lime);display:grid;place-items:center;color:var(--lime);font-weight:900;font-size:18px;box-shadow:inset 0 0 0 5px #11160d}.rail-line{width:28px;height:1px;background:var(--line);margin:4px 0}.nav{width:42px;height:42px;border:1px solid transparent;background:none;color:#687064;cursor:pointer;position:relative}.nav:hover,.nav.active{color:var(--lime);border-color:#38402f;background:#11150f}.nav.active:before{content:"";position:absolute;left:-18px;top:8px;width:3px;height:24px;background:var(--lime)}.nav b{font-size:13px}.nav small{display:block;font-size:7px;margin-top:3px}.rail .bottom{margin-top:auto}.top{grid-column:2;height:64px;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 26px;background:#101210}.crumb{font-size:12px;color:var(--muted)}.crumb strong{color:var(--text);font-weight:600}.stream{margin-left:38px;padding:8px 12px;border:1px solid var(--line);font-size:11px;color:#bbc1b6}.stream i{display:inline-block;width:7px;height:7px;background:var(--lime);margin-right:8px}.top-right{margin-left:auto;display:flex;align-items:center;gap:22px;font-size:11px}.clock{color:var(--muted)}.env{color:var(--lime)}.avatar{width:30px;height:30px;border:1px solid #596151;display:grid;place-items:center;color:var(--amber)}
+    main{grid-column:2;overflow:hidden;padding:22px 26px 18px;display:grid;grid-template-rows:auto 116px minmax(0,1fr);gap:16px;background-image:linear-gradient(rgba(255,255,255,.017) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.017) 1px,transparent 1px);background-size:28px 28px}
+    .headline{display:flex;align-items:flex-end}.eyebrow{color:var(--lime);font-size:10px;letter-spacing:.2em;margin-bottom:9px}.headline h1{font-size:28px;line-height:1;margin:0;font-weight:500;letter-spacing:-.04em}.headline h1 span{color:var(--muted)}.release{margin-left:auto;display:flex;align-items:center;gap:15px;border-left:1px solid var(--line);padding-left:22px}.release .days{font-size:31px;color:var(--amber);line-height:1}.release small{color:var(--muted);font-size:9px;line-height:1.5}.release b{color:var(--text);font-size:11px}
+    .metrics{display:grid;grid-template-columns:1.15fr 1fr 1fr 1fr 1fr;border:1px solid var(--line);background:var(--panel)}.metric{padding:16px 18px;border-right:1px solid var(--line);position:relative}.metric:last-child{border:0}.label{font-size:9px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}.big{font-size:23px;margin-top:9px;line-height:1}.big.lime{color:var(--lime)}.big.amber{color:var(--amber)}.sub{font-size:9px;color:var(--muted);margin-top:9px}.spark{position:absolute;right:15px;bottom:17px;display:flex;align-items:flex-end;gap:3px;height:28px}.spark i{display:block;width:4px;background:#495143}.spark i:nth-child(1){height:28%}.spark i:nth-child(2){height:61%}.spark i:nth-child(3){height:45%}.spark i:nth-child(4){height:88%;background:var(--lime)}.spark i:nth-child(5){height:70%}.status-dot{display:inline-block;width:7px;height:7px;margin-right:7px;background:var(--lime);box-shadow:0 0 8px #b9ff3866}.status-dot.amber{background:var(--amber);box-shadow:none}
+    .workspace{display:grid;grid-template-columns:minmax(0,1.62fr) minmax(360px,.82fr);gap:16px;min-height:0}.panel{border:1px solid var(--line);background:rgba(18,21,18,.96);min-height:0;display:flex;flex-direction:column}.panel-head{height:48px;flex:0 0 48px;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 16px}.panel-title{font-size:11px;letter-spacing:.08em}.panel-title em{color:var(--lime);font-style:normal;margin-right:8px}.tabs{margin-left:auto;display:flex;gap:16px;font-size:9px;color:var(--muted)}.tabs span.active{color:var(--lime);border-bottom:1px solid var(--lime);padding:19px 0 14px}
+    .build-summary{padding:15px 16px 13px;border-bottom:1px solid var(--line);display:flex;align-items:center}.build-id{font-size:13px}.build-id strong{color:var(--lime)}.progress{height:5px;background:#2a2f27;flex:1;margin:0 20px;position:relative}.progress:after{content:"";position:absolute;inset:0 24% 0 0;background:var(--lime)}.pct{font-size:12px;color:var(--lime)}
+    .stages{padding:0 16px}.stage{display:grid;grid-template-columns:30px 1.2fr 1fr 72px 70px;align-items:center;height:48px;border-bottom:1px solid #292d28;font-size:10px}.stage .num{color:#626a5e}.stage .name{font-size:11px}.stage .command{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stage .time{text-align:right;color:#adb4a7}.tag{text-align:center;padding:5px 0;border:1px solid #38402f;color:var(--lime);font-size:8px}.tag.run{color:var(--amber);border-color:#5a4724}.tag.wait{color:#6f776b;border-color:#333833}.loader{display:inline-block;width:8px;height:8px;border:1px solid var(--amber);border-right-color:transparent;margin-right:7px;animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+    .console{margin-top:auto;background:#0a0c0a;border-top:1px solid var(--line);padding:10px 14px;height:72px;font-size:9px;line-height:1.7;color:#7f887b}.console .prompt{color:var(--lime)}.console .warn{color:var(--amber)}
+    .right-stack{display:grid;grid-template-rows:minmax(0,1.3fr) minmax(180px,.8fr);gap:16px;min-height:0}.cl-table{font-size:9px}.cl-row{display:grid;grid-template-columns:72px 52px 1fr 52px;min-height:43px;align-items:center;padding:0 13px;border-bottom:1px solid #292d28}.cl-row.head{min-height:31px;color:var(--muted);background:#101310}.cl-row .id{color:var(--cyan)}.cl-row .author{color:#c5cbc0}.cl-row .desc{color:#8f978a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cl-row .files{text-align:right;color:var(--muted)}
+    .services{display:grid;grid-template-columns:1fr 1fr;flex:1}.service{padding:13px;border-right:1px solid #292d28;border-bottom:1px solid #292d28;display:flex;flex-direction:column;justify-content:space-between}.service:nth-child(even){border-right:0}.service:nth-child(n+3){border-bottom:0}.service-name{font-size:10px}.service-state{font-size:9px;color:var(--lime)}.service-state.warn{color:var(--amber)}.uptime{font-size:8px;color:var(--muted)}
+    @media(max-width:1250px){.app{grid-template-columns:62px 1fr}.metrics{grid-template-columns:1.2fr repeat(4,1fr)}.metric{padding-left:12px;padding-right:12px}.spark{display:none}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="rail"><div class="mark">SP</div><div class="rail-line"></div><button class="nav active"><b>▦</b><small>OPS</small></button><button class="nav"><b>↗</b><small>BUILD</small></button><button class="nav"><b>⌘</b><small>P4</small></button><button class="nav"><b>◎</b><small>WORK</small></button><button class="nav"><b>≋</b><small>LOG</small></button><button class="nav bottom"><b>?</b><small>HELP</small></button></aside>
+  <header class="top"><div class="crumb">PROJECTS / <strong>SAMPLE PROJECT</strong> / OPERATIONS</div><div class="stream"><i></i>STREAM&nbsp; //SampleProject/Main</div><div class="top-right"><span class="clock">2026.07.11 14:32:08 KST</span><span class="env">● PRODUCTION</span><div class="avatar">JW</div></div></header>
+  <main>
+    <section class="headline"><div><div class="eyebrow">UE5 DEVELOPMENT CONTROL CENTER</div><h1>SAMPLE PROJECT <span>/ BUILD CONSOLE</span></h1></div><div class="release"><div class="days">D-38</div><div><small>NEXT MILESTONE</small><br><b>ALPHA FREEZE · 08/18</b></div></div></section>
+    <section class="metrics">
+      <div class="metric"><div class="label">Latest changelist</div><div class="big lime">CL 184532</div><div class="sub">submitted 8m ago · jw.kim</div></div>
+      <div class="metric"><div class="label">Build health</div><div class="big"><span class="status-dot"></span>HEALTHY</div><div class="sub">17 passed / 1 running</div><div class="spark"><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="metric"><div class="label">Perforce</div><div class="big">24 ms</div><div class="sub">P4-SVR-01 · connected</div></div>
+      <div class="metric"><div class="label">WorkHub queue</div><div class="big amber">06</div><div class="sub">2 high priority tasks</div></div>
+      <div class="metric"><div class="label">Editor sessions</div><div class="big">28</div><div class="sub">peak today 41 · 13:20</div></div>
+    </section>
+    <section class="workspace">
+      <article class="panel">
+        <div class="panel-head"><div class="panel-title"><em>01</em>ACTIVE BUILD PIPELINE</div><div class="tabs"><span class="active">CURRENT</span><span>HISTORY</span><span>AGENTS</span></div></div>
+        <div class="build-summary"><div class="build-id"><strong>#B-240711.1421</strong> / WIN64 DEVELOPMENT</div><div class="progress"></div><div class="pct">76%</div></div>
+        <div class="stages">
+          <div class="stage"><span class="num">01</span><span class="name">Sync Workspace</span><span class="command">p4 sync //SampleProject/Main/...@184532</span><span class="time">00:48</span><span class="tag">PASSED</span></div>
+          <div class="stage"><span class="num">02</span><span class="name">Generate Project</span><span class="command">GenerateProjectFiles.bat -game</span><span class="time">01:12</span><span class="tag">PASSED</span></div>
+          <div class="stage"><span class="num">03</span><span class="name">Compile Editor</span><span class="command">Build.bat SampleProjectEditor Win64 Dev</span><span class="time">08:36</span><span class="tag">PASSED</span></div>
+          <div class="stage"><span class="num">04</span><span class="name"><i class="loader"></i>Cook Content</span><span class="command">RunUAT.bat BuildCookRun -cook -pak</span><span class="time">06:04</span><span class="tag run">RUNNING</span></div>
+          <div class="stage"><span class="num">05</span><span class="name">Package & Sign</span><span class="command">stage artifacts / verify manifest</span><span class="time">—</span><span class="tag wait">QUEUED</span></div>
+        </div>
+        <div class="console"><span class="prompt">build-agent-07:~$</span> Processing package /Game/Maps/WorldPartition/L_Desert_P<br><span class="warn">[14:31:54][Cook]</span> Shader pipeline cache: 46,281 / 61,904 (74.7%)<br><span class="prompt">[14:32:01][Info]</span> Memory 21.4 GB · CPU 87% · ETA 00:03:18</div>
+      </article>
+      <div class="right-stack">
+        <article class="panel"><div class="panel-head"><div class="panel-title"><em>02</em>RECENT CHANGELISTS</div><div class="tabs"><span class="active">MAIN</span><span>RELEASE</span></div></div><div class="cl-table">
+          <div class="cl-row head"><span>CHANGE</span><span>OWNER</span><span>DESCRIPTION</span><span>FILES</span></div>
+          <div class="cl-row"><span class="id">184532</span><span class="author">jw.kim</span><span class="desc">fix: resolve World Partition streaming hitch</span><span class="files">+12</span></div>
+          <div class="cl-row"><span class="id">184529</span><span class="author">sy.lee</span><span class="desc">feat: update boss phase 2 behavior tree</span><span class="files">+08</span></div>
+          <div class="cl-row"><span class="id">184517</span><span class="author">mj.park</span><span class="desc">art: desert outpost lighting pass</span><span class="files">+47</span></div>
+          <div class="cl-row"><span class="id">184501</span><span class="author">dh.choi</span><span class="desc">perf: reduce Niagara overdraw in combat</span><span class="files">+06</span></div>
+          <div class="cl-row"><span class="id">184488</span><span class="author">y.oh</span><span class="desc">audio: add biome transition snapshots</span><span class="files">+19</span></div>
+        </div></article>
+        <article class="panel"><div class="panel-head"><div class="panel-title"><em>03</em>SERVICE STATUS</div><div class="tabs"><span>ALL SYSTEMS</span></div></div><div class="services">
+          <div class="service"><span class="service-name">PERFORCE</span><span class="service-state">● OPERATIONAL</span><span class="uptime">99.99% / 30D</span></div>
+          <div class="service"><span class="service-name">BUILD FARM</span><span class="service-state">● 11 / 12 ONLINE</span><span class="uptime">AGENT-04 MAINT.</span></div>
+          <div class="service"><span class="service-name">WORKHUB</span><span class="service-state warn">● DEGRADED</span><span class="uptime">QUEUE DELAY 2M</span></div>
+          <div class="service"><span class="service-name">ARTIFACT STORE</span><span class="service-state">● OPERATIONAL</span><span class="uptime">68% CAPACITY</span></div>
+        </div></article>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>
