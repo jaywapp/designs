@@ -8,6 +8,7 @@ to the folder name. No manual registration needed — add a folder following
 this convention and it appears on the next Pages deploy.
 """
 import json
+import logging
 import re
 import shutil
 from pathlib import Path
@@ -56,18 +57,23 @@ def find_samples():
     for entry in sorted(ROOT.iterdir()):
         if not entry.is_dir() or entry.name.startswith(".") or entry.name in EXCLUDE_DIRS:
             continue
-        html_files = sorted(entry.glob("*.html"))
+        children = list(entry.iterdir())
+        html_files = sorted(p for p in children if p.match("*.html"))
         if not html_files:
             continue
 
         title, description = None, ""
         design_md = entry / "design.md"
-        if design_md.exists():
-            title, description = parse_design_md(design_md)
+        has_spec = design_md.exists()
+        if has_spec:
+            try:
+                title, description = parse_design_md(design_md)
+            except (OSError, UnicodeError) as err:
+                logging.warning("Cannot read design metadata for %s: %s", entry.name, type(err).__name__)
         if not title:
             title = entry.name.replace("-", " ").replace("_", " ").title()
 
-        images = sorted(p for p in entry.iterdir() if p.suffix.lower() in IMAGE_SUFFIXES)
+        images = sorted(p for p in children if p.suffix.lower() in IMAGE_SUFFIXES)
 
         samples.append({
             "slug": entry.name,
@@ -75,7 +81,7 @@ def find_samples():
             "description": description,
             "html": html_files[0].name,
             "thumbnail": images[0].name if images else None,
-            "hasSpec": design_md.exists(),
+            "hasSpec": has_spec,
         })
 
     samples.sort(key=lambda s: s["title"].lower())
