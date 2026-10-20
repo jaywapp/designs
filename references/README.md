@@ -6,6 +6,7 @@
 
 | 사이트 | 카테고리 | 핵심 특징 | 태그 | 원본 URL | 분석 문서 |
 | --- | --- | --- | --- | --- | --- |
+| ARCOA NOW | Landing Page / Brand Hub | 브랜드 슬로건과 3개 콘텐츠 영역 | Minimal, Editorial | https://now.arcoa.kr/ | [문서](arcoa-now.md) |
 | INSUNG SONG | Landing Page | 전문가 Hero, 성과 사례, 서비스 카드 | SEO, B2B, Case Study | https://insungsong.com/kr/ | [분석 문서](insung-song.md) |
 
 ## 등록 규칙
