@@ -4,10 +4,9 @@
 
 ## References
 
-아직 등록된 레퍼런스가 없습니다.
-
 | 사이트 | 카테고리 | 핵심 특징 | 태그 | 원본 URL | 분석 문서 |
 | --- | --- | --- | --- | --- | --- |
+| INSUNG SONG | Landing Page | 전문가 Hero, 성과 사례, 서비스 카드 | SEO, B2B, Case Study | https://insungsong.com/kr/ | [분석 문서](insung-song.md) |
 
 ## 등록 규칙
 
